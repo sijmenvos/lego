@@ -1,0 +1,245 @@
+html {
+	height: 100%;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: Euphemia,Euphemia UCAS
+}
+
+body {
+	height: 100%;
+	width: 100%;
+}
+
+nav {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 65px;
+}
+
+.homenav {
+	position:fixed;
+	top: 48px;
+	z-index: 100;
+}
+
+md-tabs.md-default-theme.homenav .md-header {
+	height: 36px;
+	background-color: #4DD0E1;
+}
+
+md-tabs.md-default-theme.homenav md-tab,
+md-tabs.md-default-theme.homenav md-tab.active {
+	color: black;
+}
+
+nav ul {
+	height: 100%;
+}
+
+nav ul li {
+	display: inline-block;
+	width: 33.3%;
+	height: 100%;
+	text-align: center;
+	background-color: #EEE;
+}
+
+nav ul li img {
+	height:100%;
+	width: auto;
+}
+
+nav li.active {
+	background-color: #ccc;
+}
+
+span.small {
+	font-size: 0.8em;
+}
+
+img.center {
+	margin: auto;
+	display: block;
+}
+
+.stretch {
+	flex: 1;
+	display:flex;
+	flex-direction:column;
+}
+
+.flex-row {
+	flex-direction: row;
+}
+
+#wrapper {
+	height: 100%;
+}
+
+md-tabs.nav {
+	position: fixed;
+	top: 0;
+	left:0;
+	z-index: 99;
+}
+
+.tags {
+	overflow: hidden;
+}
+
+.tag {
+	padding: 5px;
+	background-color: #03a9f4;
+	color: white;
+	float:left;
+}
+
+.tag:not(:first-of-type) {
+	margin-left: 5px;
+}
+
+.thumbnail {
+	height: 75px;
+	width: 75px;
+	padding: 10px;
+	overflow: hidden;
+	text-align: center;
+	margin-right: 0;
+}
+
+.thumbnail img {
+	height: 100%;
+}
+
+.tabpanel-container.main > div {
+	margin-top:48px;
+	overflow: scroll;
+}
+
+#tab1-content {
+	margin-top: 84px;
+}
+
+.upload {
+	width: 80%;
+	margin: auto;
+	padding: 10px;
+	border-radius: 5px;
+	border: 4px solid black;
+}
+
+.like {
+	border-top: 1px solid black;
+}
+
+.like img {
+	height: 30px;
+}
+
+.a2a_default_style.right a {
+	float: right;
+}
+
+.profile h1 {
+	font-size: 1.5em;
+}
+
+.face {
+	border-radius: 30px;
+	border: 1px solid #ddd;
+	width: 48px;
+	height:48px;
+	margin: 16px;
+}
+
+.comment .face {
+	margin: 5px;
+}
+
+.profile md-tabs span {
+	font-size: 1.5em;
+	margin-right: 10px;
+}
+
+.fullwidth input, .fullwidth textarea {
+	width:100%;
+}
+
+.fullwidth textarea {
+	max-width: 100%;
+}
+
+md-tabs.md-default-theme.secundair .md-header {
+	background-color: #4DD0E1;
+}
+
+md-tabs.md-default-theme.secundair md-tab {
+	color: black;
+}
+
+md-tabs.md-default-theme.secundair md-tab.active {
+	color: #3C6C3C;
+}
+
+img.like.liked {
+	fill: #FF6961;
+}
+
+.commentbutton {
+float: right;
+margin-top: -42px;
+margin-left: -10px;
+}
+
+.a2a_kit {
+	margin: 10px 0;
+}
+
+md-toast {
+	z-index: 100;
+	position:fixed;
+	top:0;
+	left:0;
+}
+
+.idea .md-tile-left img {
+	width: 100px;
+	padding: 10px;
+	height: 100px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+p.idealike img {
+	height: 16px;
+}
+
+.detail {
+	margin-top: 48px;
+}
+
+.search {
+	width: 100%;
+	padding: 10px;
+}
+
+.search > img {
+	padding: 1px;
+	margin: 0px 10px;
+}
+
+.search > input {
+	border: none;
+}
+
+.tags.inline {
+	display: inline-block;
+	margin-left: 7px;
+}

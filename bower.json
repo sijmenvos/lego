@@ -1,0 +1,54 @@
+{
+  "name": "Home Automation",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sijmenvos/FED2",
+  "authors": [
+    "Sijmen Vos <sijmenvos@gmail.com>"
+  ],
+  "main": "bin/www",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap-switch": "~0.3.0",
+    "angular-dragdrop": "~1.0.8",
+    "angular-touch": "~1.2.26",
+    "angular-ui-select2": "~0.0.5",
+    "bootstrap-switch": "~3.0.2",
+    "core-a11y-keys": "Polymer/core-a11y-keys#^0.5.0",
+    "core-animation": "Polymer/core-animation#^0.5.0",
+    "core-collapse": "Polymer/core-collapse#^0.5.0",
+    "core-component-page": "Polymer/core-component-page#^0.5.0",
+    "core-drawer-panel": "Polymer/core-drawer-panel#^0.5.0",
+    "core-dropdown": "Polymer/core-dropdown#^0.5.0",
+    "core-field": "Polymer/core-field#^0.5.0",
+    "core-focusable": "Polymer/core-focusable#^0.5.0",
+    "core-header-panel": "Polymer/core-header-panel#^0.5.0",
+    "core-input": "Polymer/core-input#^0.5.0",
+    "core-item": "Polymer/core-item#^0.5.0",
+    "core-label": "Polymer/core-label#^0.5.0",
+    "core-menu": "Polymer/core-menu#^0.5.0",
+    "core-range": "Polymer/core-range#^0.5.0",
+    "core-scroll-header-panel": "Polymer/core-scroll-header-panel#^0.5.0",
+    "core-style": "Polymer/core-style#^0.5.0",
+    "font-roboto": "Polymer/font-roboto#^0.5.0",
+    "jquery-touchswipe": "~1.6.6",
+    "jquery-ui": "~1.11.1",
+    "jquery": "~2.1.1",
+    "jqueryui-touch-punch": "*",
+    "sampler-scaffold": "Polymer/sampler-scaffold#^0.5.0",
+    "angular-material": "master",
+    "angular": "master"
+  },
+  "resolutions": {
+    "angular": ">= 1.0.8",
+    "angular-material": "master"
+  },
+  "private": true
+}

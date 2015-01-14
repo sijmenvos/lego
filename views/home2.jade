@@ -1,0 +1,26 @@
+md-content(md-swipe-right='toggleLeft()')
+  .inset
+    md-card(ng-repeat="item in uploads")
+      img(ng-src="{{item.image}}", width="100%", style="max-height:250px")
+      h2(ng-bind="item.title")
+      p(ng-bind="item.description")
+
+section(layout='row', flex='', md-swipe-left='close()')
+  md-sidenav.md-sidenav-left.md-whiteframe-z2(md-component-id='left', md-is-locked-open='$media("gt-md")')
+    md-toolbar.md-theme-indigo
+      h1.md-toolbar-tools Menu
+    md-content.md-padding(ng-controller='menuCtrl')
+      p(hide-md='', show-gt-md='')
+        ul
+          li 
+            img(src="./images/home.png", height="25px")
+            | Home
+          li
+            img(src="./images/profile.png", height="25px")
+            | Profile
+          li
+            img(src="./images/upload.png", height="25px")
+            | Upload
+          li
+            img(src="./images/settings.png", height="25px")
+            | Settings

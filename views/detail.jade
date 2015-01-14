@@ -1,0 +1,36 @@
+md-content
+  md-tabs.md-accent.nav(md-selected='data.selectedIndex')
+    md-tab#tab1(aria-controls='tab1-content', ui-sref="profile")
+      img(src="./images/icons/explore.svg", height="30px")
+    md-tab#tab2(aria-controls='tab2-content', ui-sref="profile") 
+      img(src="./images/icons/profile.svg", height="30px")
+    md-tab#tab3(aria-controls='tab3-content', ui-sref="profile")
+      img(src="./images/icons/upload.svg", height="30px", width="28px")
+  md-card.detail
+    img(ng-src="{{item.image}}", width="100%")
+    h1(ng-bind="item.title")
+    p(ng-bind="item.description")
+    p
+      ul
+        li 
+          img(src="./images/icons/date.svg", height="25px", width="25px") 
+          |  {{item.date || '1 januari 2014'}}
+        li
+          img(src="./images/icons/brick.svg", height="25px", width="25px") 
+          |  400
+        li
+          img(src="./images/icons/people.svg", height="25px", width="25px") 
+          |  Sean Hangel, Sijmen Vos
+        li 
+          img(src="./images/icons/tags.svg", height="25px", width="25px")
+          .tags.inline
+            .tag Tags
+            .tag come
+            .tag here
+      div.a2a_kit.a2a_kit_size_32.a2a_default_style.right
+        a
+          img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+        a.a2a_button_facebook
+        a.a2a_button_twitter
+        a.a2a_button_google_plus 
+      script(type="text/javascript", src="//static.addtoany.com/menu/page.js")

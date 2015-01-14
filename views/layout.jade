@@ -1,0 +1,12 @@
+doctype html
+html(ng-app='lego')
+  include head
+  body(ng-controller="appCtrl", layout="column")
+    #wrapper
+
+      #page-wrapper(ui-view)
+
+
+        include navigation 
+
+    include scripts

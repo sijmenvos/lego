@@ -1,0 +1,37 @@
+//- md-toolbar
+  h1.md-toolbar-tools
+    span.md-flex Home
+
+md-tabs.md-accent(md-selected='data.selectedIndex')
+  md-tab#tab1(aria-controls='tab1-content') 
+  	img(src="./images/icons/explore.svg")
+  md-tab#tab2(aria-controls='tab2-content') Likes
+  md-tab#tab3(aria-controls='tab3-content') Settings
+
+ng-switch.tabpanel-container(on='data.selectedIndex')
+  #tab1-content(role='tabpanel', aria-labelledby='tab1', ng-switch-when='0', md-swipe-left='next()', md-swipe-right='previous()')
+    md-list
+      md-item(ng-repeat='(id, item) in uploads')
+        md-item-content
+          .md-tile-left.thumbnail(ui-sref="creation({id: id})")
+            img(ng-src='{{item.image}}', alt='{{item.title}}')
+          .md-tile-content(ui-sref="creation({id: id})")
+            h3 {{item.title}}
+            //- h4 {{item.who}}
+            //- p(ng-bind="item.description")
+          .md-tile-right(style="text-align:center;", ng-click="item.likes=item.likes+1")
+            .row {{item.likes || 0}}x
+            .row
+              img(src="./images/like.png", height="15")
+  #tab2-content(role='tabpanel', aria-labelledby='tab2', ng-switch-when='1', md-swipe-left='next()', md-swipe-right='previous()')
+    .inset
+      md-card(ng-repeat="item in uploads")
+        img(ng-src="{{item.image}}", width="100%", style="max-height:250px")
+        h2(ng-bind="item.title")
+        p(ng-bind="item.description")
+        .like
+          span reputation 
+          img(ng-src="./images/{{!item.like ? 'give_' : ''}}like.png", ng-click="item.like = !item.like")
+          span share 
+          img(src="./images/share.png")
+  #tab3-content(role='tabpanel', aria-labelledby='tab3', ng-switch-when='2', md-swipe-left='next()', md-swipe-right='previous()')

@@ -1,0 +1,10 @@
+md-content.inset
+	h1 Login
+	img(src="./images/gate.png", width="100%")
+	form
+		.row
+			md-text-float(type="text", label="Username", ng-model="user.name")
+		.row
+			md-text-float(type="password", label="Password", ng-model="user.password")
+		.row
+			md-button.md-primary.md-raised(ui-sref="profile") Login
