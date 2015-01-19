@@ -1,6 +1,6 @@
 angular.module('lego')
 
-.controller('appCtrl', function($rootScope, $stateParams, $state, $mdToast){
+.controller('appCtrl', function($rootScope, $stateParams, $state, $mdToast,$mdBottomSheet){
 	$rootScope.uploads = [{
 		title: 'Escher + legos',
 		description: "All your escher favorites, rendered using everyone's favorite childhood toys. The links include the descriptions of how each piece was built, and what geometric or camera trickery was involved.",
@@ -27,11 +27,17 @@ angular.module('lego')
 		image: './images/pokemon.jpg'
 	}];
 
+    $rootScope.log = function(item){
+        console.log(item)
+    }
+
     $rootScope.ideas = [{
         title: 'Eiffeltoren',
         description: 'Een levensgrote eiffeltoren schaal 1:1!',
         image: './images/eiffel.jpeg'
     }];
+
+    $rootScope.categories = ['Movies', 'Buildings', 'People', 'Animals', 'Culture', 'Nature', 'Vehicles', 'Tech', 'Robots', 'Life-size', 'Space', 'Miniature']
 
     $('#tab1-content').scrollTop(45);
 
@@ -63,18 +69,72 @@ angular.module('lego')
     	creation.newTag = "";
     }
     $rootScope.like = function() {
-    	var sound = new Sound('./music/awesome.mp3', 100, false);
-    	sound.start();
-    	setTimeout(function(){
-    		sound.stop();
-    	},3800);
-	    $mdToast.show({
-	      // controller: 'ToastCtrl',
-	      template: '<md-toast><span flex>Post liked!</span></md-toast>',
-	      hideDelay: 1000,
-	      position: 'top left right'
-	    });
-	  };
+    	// var sound = new Sound('./music/awesome.mp3', 100, false);
+    	// sound.start();
+    	// setTimeout(function(){
+    	// 	sound.stop();
+    	// },3800);
+	    // $mdToast.show({
+	    //   // controller: 'ToastCtrl',
+	    //   template: '<md-toast><span flex>Post liked!</span></md-toast>',
+	    //   hideDelay: 1000,
+	    //   position: 'top left right'
+	    // });
+            $mdBottomSheet.show({
+              template: '\
+ <md-bottom-sheet class="md-list md-has-header">\
+  <md-subheader>Like actions</md-subheader>\
+  <md-list class="fullWidthButtons">\
+    <md-item>\
+      <md-button aria-label="Original">Original</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Pretty">Pretty</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Complex">Complex</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Awesome">Awesome</md-button>\
+    </md-item>\
+  </md-list>\
+</md-bottom-sheet>'
+            });
+    };
+
+    $rootScope.sort = function() {
+        // var sound = new Sound('./music/awesome.mp3', 100, false);
+        // sound.start();
+        // setTimeout(function(){
+        //  sound.stop();
+        // },3800);
+        // $mdToast.show({
+        //   // controller: 'ToastCtrl',
+        //   template: '<md-toast><span flex>Post liked!</span></md-toast>',
+        //   hideDelay: 1000,
+        //   position: 'top left right'
+        // });
+            $mdBottomSheet.show({
+              template: '\
+ <md-bottom-sheet class="md-list md-has-header">\
+  <md-subheader>Order by</md-subheader>\
+  <md-list class="fullWidthButtons">\
+    <md-item>\
+      <md-button aria-label="Originality">Originality</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Pretty">Prettyness</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Complex">Complexity</md-button>\
+    </md-item>\
+    <md-item>\
+      <md-button aria-label="Awesome">Awesomeness</md-button>\
+    </md-item>\
+  </md-list>\
+</md-bottom-sheet>'
+            });
+    };
 })
 
 .controller('homeCtrl', function($scope,$timeout, $mdSidenav){

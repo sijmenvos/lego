@@ -1,4 +1,4 @@
-angular.module('lego', ['ui.router', 'ngMaterial'])
+angular.module('lego', ['ui.router', 'ngMaterial', 'ui.select'])
 
 .run(function($rootScope){
 	console.log('run');
@@ -8,8 +8,10 @@ angular.module('lego', ['ui.router', 'ngMaterial'])
   })
 })
 
-.config(function($sceDelegateProvider, $stateProvider, $urlRouterProvider, $httpProvider){
+.config(function($sceDelegateProvider, $stateProvider, $urlRouterProvider, $httpProvider, $sceProvider){
 	console.log('config');
+
+  $sceProvider.enabled(false);
 
   console.log($httpProvider.defaults.headers.common);
 

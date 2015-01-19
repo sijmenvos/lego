@@ -10,7 +10,8 @@ md-content
     img(ng-src="{{item.image}}", width="100%")
     h1(ng-bind="item.title")
     p(ng-bind="item.description")
-    p
+    //- md-divider
+    p(style="margin-top:10px")
       ul
         li 
           img(src="./images/icons/date.svg", height="25px", width="25px") 
@@ -27,6 +28,21 @@ md-content
             .tag Tags
             .tag come
             .tag here
+      md-divider
+      .graph
+        ul
+          li
+            span Original
+            .bar(style="width:30px") 1
+          li
+            span Pretty
+            .bar(style="width:60px") 2
+          li
+            span Complex
+            .bar(style="width:30px") 1
+          li
+            span Awesome
+            .bar(style="width:90px") 3
       div.a2a_kit.a2a_kit_size_32.a2a_default_style.right
         a
           img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
@@ -34,3 +50,14 @@ md-content
         a.a2a_button_twitter
         a.a2a_button_google_plus 
       script(type="text/javascript", src="//static.addtoany.com/menu/page.js")
+
+      md-divider
+      md-item.comment(ng-repeat="comment in item.comments")
+        md-item-content
+          .md-tile-left
+            img.face(src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Stalin_1902_Colour.jpg/220px-Stalin_1902_Colour.jpg")
+          .md-tile-content
+            p Sean Hangel
+            p {{comment}}
+      md-text-float(type="text", ng-model="item.newComment", label="Place a comment", ng-enter="postComment(item)")
+      md-button.commentbutton(ng-click="postComment(item)") Post

@@ -12,48 +12,6 @@ md-tabs.md-accent.nav(md-selected='data.selectedIndex')
 
 ng-switch.tabpanel-container.main(on='data.selectedIndex')
   #tab1-content(role='tabpanel', aria-labelledby='tab1', ng-switch-when='0', md-swipe-left='next()', md-swipe-right='previous()')
-    md-tabs.homenav(md-selected="data.homeTab")
-      md-tab#new(aria-controls="home-new-content") Popular
-      md-tab#ideas(aria-controls="home-ideas-content") Ideas
-
-    ng-switch(on='data.homeTab')
-      #home-new-content(role='tabpanel', aria-labelledby='New', ng-switch-when='0')
-        .search
-          img(src="./images/icons/search.svg", height="20px")
-          input(type="text", placeholder="Search")
-        md-card(ng-repeat="item in uploads")
-          img(ng-src="{{item.image}}", width="100%", style="max-height:250px", ui-sref="creation({id: $index})")
-          h2(ng-bind="item.title", ui-sref="creation({id: $index})")
-          p(ng-bind="item.description")
-          div.a2a_kit.a2a_kit_size_32.a2a_default_style.right
-            a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
-            a.a2a_button_facebook
-            a.a2a_button_twitter
-            a.a2a_button_google_plus 
-          script(type="text/javascript", src="//static.addtoany.com/menu/page.js")
-          md-divider
-          md-item.comment(ng-repeat="comment in item.comments")
-            md-item-content
-              .md-tile-left
-                img.face(src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Stalin_1902_Colour.jpg/220px-Stalin_1902_Colour.jpg")
-              .md-tile-content
-                p Sean Hangel
-                p {{comment}}
-          md-text-float(type="text", ng-model="item.newComment", label="Place a comment", ng-enter="postComment(item)")
-          md-button.commentbutton(ng-click="postComment(item)") Post
-      #home-new-content(role='tabpanel', aria-labelledby='New', ng-switch-when='1')
-        md-item.idea(ng-repeat="item in ideas")
-          md-item-content
-            .md-tile-left
-              img(ng-src="{{item.image}}")
-            .md-tile-content
-              h3 {{item.title}}
-              p {{item.description}}
-            .md-tile-right
-              p.idealike.text-center(ng-click="item.liked=!item.liked; like();") 8 
-                img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", nc-class="{liked:item.liked}")
-              md-button Read more
   #tab2-content.profile(role='tabpanel', aria-labelledby='tab2', ng-switch-when='1', md-swipe-left='next()', md-swipe-right='previous()')
     md-item
       md-item-content
@@ -68,8 +26,11 @@ div(ng-if="data.selectedIndex==2", md-swipe-left='next()', md-swipe-right='previ
   md-tabs.homenav(md-selected="data.uploadTab")
     md-tab#creation(aria-controls="upload-creation") Creation
     md-tab#idea(aria-controls="upload-idea") Idea
-  .inset.fullwidth
-    h2 Upload creation
+  ng-switch(on='data.uploadTab')
+    #upload-creation.inset.fullwidth(role='tabpanel', aria-labelledby='Creation', ng-switch-when='0')
+
+div.profile.inset(ng-if="data.selectedIndex==2", md-swipe-left="next()", md-swipe-right="previous()")
+  h2 Upload creation
     md-text-float(type="text", ng-model="creation.name", label="Title")
     md-input-group.md-input-has-value
       label(style="margin-bottom:10px") Image
@@ -81,14 +42,110 @@ div(ng-if="data.selectedIndex==2", md-swipe-left='next()', md-swipe-right='previ
       img(ng-if="video", src="./images/bart_video.jpg", height="80px", ng-click="video = false")
       img(ng-hide="video", src="./images/icons/video.svg", height="40px", style="margin-top:10px", ng-click="video = true")
     md-text-float(type="text", ng-model="creation.description", label="Description", multiline)
-    md-text-float(type="number", ng-model="creation.bricks", label="Bricks used")
-    md-text-float(type="time", ng-model="creation.time", label="Time to complete")
+    md-input-group.md-input-has-value
+      label Bricks used
+      select
+        option 0-200
+        option 200-500
+        option 500-1000
+        option 1000-2500
+        option 2500+
+
+    //- md-text-float(type="time", ng-model="creation.time", label="Time to complete")
+    md-input-group.md-input-has-value
+      label Time to complete (hours)
+      div(layout)
+        md-slider(flex='', min='0', max='400', ng-model='creation.time', aria-label='red')       
+        div(flex='20', layout='', layout-align='center center')
+          input(type='number', ng-model='creation.time', aria-label='red', aria-controls='red-slider')
     md-text-float(type="text", ng-model="creation.creator", label="Creator", ng-init="creation.creator='Sean Hangel'")
     .tags
       .tag(ng-repeat="item in creation.tags", ng-click="creation.tags.splice($index, 1)") {{item}}
     md-text-float(type="text", ng-model="creation.newTag", label="Add tags", ng-enter="addTag(creation)")
-    md-button.md-raised.md-primary(style="width:100%") Upload 
+    md-button.md-raised.md-primary(style="width:100%", ng-click="data.selectedIndex = 1; data.selectedProfile = 2") Upload 
       img(src="./images/icons/upload.svg", height="15px")
+  #upload-idea.inset.fullwidth(role='tabpanel', aria-labelledby='Idea', ng-switch-when='1')
+    h2 New idea
+    md-text-float(type="text", ng-model="creation.name", label="Title")
+    md-input-group.md-input-has-value
+      label(style="margin-bottom:10px") Image
+      img(ng-if="images > 0", src="./images/bart.jpg", height="80px", style="margin-right:10px")
+      img(ng-if="images > 1", src="./images/bart_skate.jpg", height="80px", style="margin-right:10px")
+      img(src="./images/icons/camera.svg", height="40px", ng-click="images = images+1")
+    md-text-float(type="text", ng-model="creation.description", label="Description", multiline)
+    .tags
+      .tag(ng-repeat="item in creation.tags", ng-click="creation.tags.splice($index, 1)") {{item}}
+    md-text-float(type="text", ng-model="creation.newTag", label="Add tags", ng-enter="addTag(creation)")
+    md-button.md-raised.md-primary(style="width:100%", ng-click="data.selectedIndex = 1; data.selectedProfile = 2") Upload 
+      img(src="./images/icons/upload.svg", height="15px")
+
+div.profile(ng-if="data.selectedIndex==0", md-swipe-left="next()", md-swipe-right="previous()")
+  md-tabs.homenav(md-selected="data.homeTab")
+    md-tab#new(aria-controls="home-new-content") Popular
+    md-tab#ideas(aria-controls="home-ideas-content") Ideas
+
+  .sort(ng-click="sort()")
+    img(src="./images/icons/filter.svg", height="20px")
+
+  ng-switch(on='data.homeTab')
+    .search
+        img(ng-click="showSearch = !showSearch", src="./images/icons/search.svg", height="20px")
+        //- input(type="text", placeholder="Search", ng-model="homeSearch", ng-focus="showSearch = true", ng-blur="showSearch = false")
+        ui-select(ng-model="homeSearch.selected", reset-search-input="true", on-select="homeSearch.selected = undefined")
+          ui-select-match(placeholder="Search") {{$item.title}}
+          ui-select-choices(repeat="value in uploads | filter: ($select.search.length >= 2 ? $select.search : 'safasdfas')")
+            div(ng-bind-html="value.title | highlight: $select.search")
+      .searchCategories(ng-show="showSearch")
+        md-card(ng-repeat="item in categories")
+          h2 {{item}}
+    #home-new-content(role='tabpanel', aria-labelledby='New', ng-switch-when='0')
+      md-card(ng-repeat="item in uploads | filter:homeSearch.selected", ng-hide="showSearch")
+        img(ng-src="{{item.image}}", width="100%", style="max-height:250px", ui-sref="creation({id: $index})")
+        h2(ng-bind="item.title", ui-sref="creation({id: $index})")
+        //- p(ng-bind="item.description")
+        .graph
+          ul
+            li
+              span Original
+              .bar(style="width:30px") 1
+            li
+              span Pretty
+              .bar(style="width:60px") 2
+            li
+              span Complex
+              .bar(style="width:30px") 1
+            li
+              span Awesome
+              .bar(style="width:90px") 3
+        //- // I got these buttons from simplesharebuttons.com
+        #share-buttons.text-right
+          //- // Facebook
+          a(href='http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com', target='_blank')
+            img(src='http://www.simplesharebuttons.com/images/somacro/facebook.png', alt='Facebook')
+          //- // Twitter
+          a(href='http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons&hashtags=simplesharebuttons', target='_blank')
+            img(src='http://www.simplesharebuttons.com/images/somacro/twitter.png', alt='Twitter')
+          //- // Google+
+          a(href='https://plus.google.com/share?url=http://www.simplesharebuttons.com', target='_blank')
+            img(src='http://www.simplesharebuttons.com/images/somacro/google.png', alt='Google')
+          //- // Email
+          a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
+            img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
+          a
+            img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+
+    #home-new-content(role='tabpanel', aria-labelledby='New', ng-switch-when='1')
+      md-item.idea(ng-repeat="item in ideas")
+        md-item-content
+          .md-tile-left
+            img(ng-src="{{item.image}}")
+          .md-tile-content
+            h3 {{item.title}}
+            p {{item.description}}
+          .md-tile-right
+            p.idealike.text-center(ng-click="item.liked=!item.liked; like();") 8 
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", nc-class="{liked:item.liked}")
+            md-button Read more
 
 div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-right='previous()')
   md-tabs.md-accent.secundair(md-selected='data.selectedProfile')
@@ -109,13 +166,21 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
           img(ng-src="{{item.image}}", width="100%", style="max-height:250px")
           h2(ng-bind="item.title")
           p(ng-bind="item.description")
-          div.a2a_kit.a2a_kit_size_32.a2a_default_style.right
+          #share-buttons.text-right
+            //- // Facebook
+            a(href='http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/facebook.png', alt='Facebook')
+            //- // Twitter
+            a(href='http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons&hashtags=simplesharebuttons', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/twitter.png', alt='Twitter')
+            //- // Google+
+            a(href='https://plus.google.com/share?url=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/google.png', alt='Google')
+            //- // Email
+            a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
+              img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
             a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
-            a.a2a_button_facebook
-            a.a2a_button_twitter
-            a.a2a_button_google_plus 
-          script(type="text/javascript", src="//static.addtoany.com/menu/page.js")
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
           md-divider
           md-item.comment(ng-repeat="comment in item.comments")
             md-item-content
@@ -133,13 +198,21 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
           img(ng-src="{{item.image}}", width="100%", style="max-height:250px")
           h2(ng-bind="item.title")
           p(ng-bind="item.description")
-          div.a2a_kit.a2a_kit_size_32.a2a_default_style.right
+          #share-buttons.text-right
+            //- // Facebook
+            a(href='http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/facebook.png', alt='Facebook')
+            //- // Twitter
+            a(href='http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons&hashtags=simplesharebuttons', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/twitter.png', alt='Twitter')
+            //- // Google+
+            a(href='https://plus.google.com/share?url=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/google.png', alt='Google')
+            //- // Email
+            a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
+              img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
             a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
-            a.a2a_button_facebook
-            a.a2a_button_twitter
-            a.a2a_button_google_plus 
-          script(type="text/javascript", src="//static.addtoany.com/menu/page.js")
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
           md-divider
           md-item.comment(ng-repeat="comment in item.comments")
             md-item-content
@@ -153,6 +226,35 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
     #profile-uploads(role='tabpanel', aria-labelledby='uploads', ng-switch-when='2')
       .inset
         h2 Uploads
+        md-card(ng-repeat="item in uploads | filter:{liked:true}")
+          img(ng-src="{{item.image}}", width="100%", style="max-height:250px")
+          h2(ng-bind="item.title")
+          p(ng-bind="item.description")
+          #share-buttons.text-right
+            //- // Facebook
+            a(href='http://www.facebook.com/sharer.php?u=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/facebook.png', alt='Facebook')
+            //- // Twitter
+            a(href='http://twitter.com/share?url=http://www.simplesharebuttons.com&text=Simple Share Buttons&hashtags=simplesharebuttons', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/twitter.png', alt='Twitter')
+            //- // Google+
+            a(href='https://plus.google.com/share?url=http://www.simplesharebuttons.com', target='_blank')
+              img(src='http://www.simplesharebuttons.com/images/somacro/google.png', alt='Google')
+            //- // Email
+            a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
+              img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
+            a
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+          md-divider
+          md-item.comment(ng-repeat="comment in item.comments")
+            md-item-content
+              .md-tile-left
+                img.face(src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Stalin_1902_Colour.jpg/220px-Stalin_1902_Colour.jpg")
+              .md-tile-content
+                p Sean Hangel
+                p {{comment}}
+          md-text-float(type="text", ng-model="item.newComment", label="Place a comment", ng-enter="postComment(item)")
+          md-button.commentbutton(ng-click="postComment(item)") Post
 //- .after-tabs-area(layout='row', layout-sm='column', layout-margin='', layout-align='left center')
     md-text-float(type='number', label='Selected Index', ng-model='data.selectedIndex')
     div(flex='')
