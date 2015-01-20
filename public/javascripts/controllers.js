@@ -159,7 +159,7 @@ angular.module('lego')
 })
 
 .controller('ideaCtrl', function($scope, $rootScope, $stateParams){
-    $scope.item = $rootScope.uploads[$stateParams.id];  
+    $scope.item = $rootScope.ideas[$stateParams.id];  
 })
 
 .controller('menuCtrl', function($scope, $timeout, $mdSidenav){
