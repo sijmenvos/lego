@@ -27,6 +27,11 @@ angular.module('lego')
 		image: './images/pokemon.jpg'
 	}];
 
+    $rootScope.hideSheet = function(){
+        console.log('test');
+        $mdBottomSheet.hide();
+    }
+
     $rootScope.log = function(item){
         console.log(item)
     }
@@ -82,7 +87,7 @@ angular.module('lego')
 	    // });
             $mdBottomSheet.show({
               template: '\
- <md-bottom-sheet class="md-list md-has-header">\
+ <md-bottom-sheet class="md-list md-has-header" ng-click="hideSheet()">\
   <md-subheader>Like actions</md-subheader>\
   <md-list class="fullWidthButtons">\
     <md-item>\
@@ -151,6 +156,10 @@ angular.module('lego')
 
 .controller('creationCtrl', function($scope, $rootScope, $stateParams){
 	$scope.item = $rootScope.uploads[$stateParams.id];	
+})
+
+.controller('ideaCtrl', function($scope, $rootScope, $stateParams){
+    $scope.item = $rootScope.uploads[$stateParams.id];  
 })
 
 .controller('menuCtrl', function($scope, $timeout, $mdSidenav){

@@ -84,7 +84,7 @@ div.profile(ng-if="data.selectedIndex==0", md-swipe-left="next()", md-swipe-righ
     md-tab#new(aria-controls="home-new-content") Popular
     md-tab#ideas(aria-controls="home-ideas-content") Ideas
 
-  .sort(ng-click="sort()")
+  .sort(ng-click="sort($event)")
     img(src="./images/icons/filter.svg", height="20px")
 
   ng-switch(on='data.homeTab')
@@ -132,10 +132,10 @@ div.profile(ng-if="data.selectedIndex==0", md-swipe-left="next()", md-swipe-righ
           a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
             img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
           a
-            img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+            img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like($event);", nc-class="{liked:item.liked}")
 
     #home-new-content(role='tabpanel', aria-labelledby='New', ng-switch-when='1')
-      md-item.idea(ng-repeat="item in ideas")
+      md-item.idea(ng-repeat="item in ideas", ui-sref="idea({id: $index})")
         md-item-content
           .md-tile-left
             img(ng-src="{{item.image}}")
@@ -143,7 +143,7 @@ div.profile(ng-if="data.selectedIndex==0", md-swipe-left="next()", md-swipe-righ
             h3 {{item.title}}
             p {{item.description}}
           .md-tile-right
-            p.idealike.text-center(ng-click="item.liked=!item.liked; like();") 8 
+            p.idealike.text-center(ng-click="item.liked=!item.liked; like($event);") 8 
               img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", height="22px", style="margin-top:5px", nc-class="{liked:item.liked}")
             md-button Read more
 
@@ -180,7 +180,7 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
             a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
               img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
             a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like($event);", nc-class="{liked:item.liked}")
           md-divider
           md-item.comment(ng-repeat="comment in item.comments")
             md-item-content
@@ -212,7 +212,7 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
             a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
               img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
             a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like($event);", nc-class="{liked:item.liked}")
           md-divider
           md-item.comment(ng-repeat="comment in item.comments")
             md-item-content
@@ -244,7 +244,7 @@ div.profile(ng-if="data.selectedIndex==1", md-swipe-left='next()', md-swipe-righ
             a(href='mailto:?Subject=Simple Share Buttons&Body=I%20saw%20this%20and%20thought%20of%20you!%20 http://www.simplesharebuttons.com')
               img(src='http://www.simplesharebuttons.com/images/somacro/email.png', alt='Email')
             a
-              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like();", nc-class="{liked:item.liked}")
+              img(ng-src="./images/icons/like{{item.liked ? 'd' : ''}}.svg", ng-click="item.liked=!item.liked; like($event);", nc-class="{liked:item.liked}")
           md-divider
           md-item.comment(ng-repeat="comment in item.comments")
             md-item-content

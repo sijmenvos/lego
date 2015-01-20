@@ -54,4 +54,9 @@ angular.module('lego', ['ui.router', 'ngMaterial', 'ui.select'])
       controller: 'creationCtrl',
       templateUrl: '/views/detail'
     })
+    .state('idea', {
+      url: "/idea/:id",
+      controller: 'ideaCtrl',
+      templateUrl: '/views/ideaDetail'
+    })
 })

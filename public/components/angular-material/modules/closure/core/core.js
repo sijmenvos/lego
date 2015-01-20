@@ -2,7 +2,7 @@
  * Angular Material Design
  * https://github.com/angular/material
  * @license MIT
- * v0.6.1-master-d192083
+ * v0.6.1
  */
 goog.provide('ng.material.core');
 
@@ -119,41 +119,25 @@ MdConstantFactory.$inject = ["$$rAF", "$sniffer"];
 (function() {
 'use strict';
 
-/*
+/* 
  * This var has to be outside the angular factory, otherwise when
  * there are multiple material apps on the same page, each app
- * will create its own instance of this array and the app's IDs
+ * will create its own instance of this array and the app's IDs 
  * will not be unique.
  */
 var nextUniqueId = ['0','0','0'];
 
 angular.module('material.core')
-.factory('$mdUtil', ["$cacheFactory", "$document", function($cacheFactory, $document) {
+.factory('$mdUtil', ['$cacheFactory', function($cacheFactory) {
   var Util;
   return Util = {
     now: window.performance ? angular.bind(window.performance, window.performance.now) : Date.now,
-
-    attachDragBehavior: attachDragBehavior,
 
     /**
      * Publish the iterator facade to easily support iteration and accessors
      * @see iterator below
      */
     iterator: iterator,
-
-    fakeNgModel: function() {
-      return {
-        $setViewValue: function(value) {
-          this.$viewValue = value;
-          this.$render(value);
-          this.$viewChangeListeners.forEach(function(cb) { cb(); });
-        },
-        $parsers: [],
-        $formatters: [],
-        $viewChangeListeners: [],
-        $render: angular.noop
-      };
-    },
 
     /**
      * @see cacheFactory below
@@ -425,7 +409,7 @@ angular.module('material.core')
     }
 
     /*
-     * Find the next item. If reloop is true and at the end of the list, it will
+     * Find the next item. If reloop is true and at the end of the list, it will 
      * go back to the first item. If given ,the `validate` callback will be used
      * determine whether the next item is valid. If not valid, it will try to find the
      * next item again.
@@ -447,7 +431,7 @@ angular.module('material.core')
     }
 
     /*
-     * Find the previous item. If reloop is true and at the beginning of the list, it will
+     * Find the previous item. If reloop is true and at the beginning of the list, it will 
      * go back to the last item. If given ,the `validate` callback will be used
      * determine whether the previous item is valid. If not valid, it will try to find the
      * previous item again.
@@ -485,105 +469,6 @@ angular.module('material.core')
     }
   }
 
-  function attachDragBehavior(scope, element, options) {
-    // The state of the current drag & previous drag
-    var drag;
-    var previousDrag;
-    // Whether the pointer is currently down on this element.
-    var pointerIsDown;
-    var START_EVENTS = 'mousedown touchstart pointerdown';
-    var MOVE_EVENTS = 'mousemove touchmove pointermove';
-    var END_EVENTS = 'mouseup mouseleave touchend touchcancel pointerup pointercancel';
-
-    // Listen to move and end events on document. End events especially could have bubbled up
-    // from the child.
-    element.on(START_EVENTS, startDrag);
-    $document.on(MOVE_EVENTS, doDrag)
-      .on(END_EVENTS, endDrag);
-
-    scope.$on('$destroy', cleanup);
-
-    return cleanup;
-
-    function cleanup() {
-      if (cleanup.called) return;
-      cleanup.called = true;
-
-      element.off(START_EVENTS, startDrag);
-      $document.off(MOVE_EVENTS, doDrag)
-        .off(END_EVENTS, endDrag);
-      drag = pointerIsDown = false;
-    }
-
-    function startDrag(ev) {
-      var eventType = ev.type.charAt(0);
-      var now = Util.now();
-      // iOS & old android bug: after a touch event, iOS sends a click event 350 ms later.
-      // Don't allow a drag of a different pointerType than the previous drag if it has been
-      // less than 400ms.
-      if (previousDrag && previousDrag.pointerType !== eventType &&
-          (now - previousDrag.endTime < 400)) {
-        return;
-      }
-      if (pointerIsDown) return;
-      pointerIsDown = true;
-
-      drag = {
-        // Restrict this drag to whatever started it: if a mousedown started the drag,
-        // don't let anything but mouse events continue it.
-        pointerType: eventType,
-        startX: getPosition(ev),
-        startTime: now
-      };
-
-      element.one('$md.dragstart', function(ev) {
-        // Allow user to cancel by preventing default
-        if (ev.defaultPrevented) drag = null;
-      });
-      element.triggerHandler('$md.dragstart', drag);
-    }
-    function doDrag(ev) {
-      if (!drag || !isProperEventType(ev, drag)) return;
-
-      if (drag.pointerType === 't' || drag.pointerType === 'p') {
-        // No scrolling for touch/pointer events
-        ev.preventDefault();
-      }
-      updateDragState(ev);
-      element.triggerHandler('$md.drag', drag);
-    }
-    function endDrag(ev) {
-      pointerIsDown = false;
-      if (!drag || !isProperEventType(ev, drag)) return;
-
-      drag.endTime = Util.now();
-      updateDragState(ev);
-
-      element.triggerHandler('$md.dragend', drag);
-
-      previousDrag = drag;
-      drag = null;
-    }
-
-    function updateDragState(ev) {
-      var x = getPosition(ev);
-      drag.distance = drag.startX - x;
-      drag.direction = drag.distance > 0 ? 'left' : (drag.distance < 0 ? 'right' : '');
-      drag.duration = drag.startTime - Util.now();
-      drag.velocity = Math.abs(drag.duration) / drag.time;
-    }
-    function getPosition(ev) {
-      ev = ev.originalEvent || ev; //support jQuery events
-      var point = (ev.touches && ev.touches[0]) ||
-        (ev.changedTouches && ev.changedTouches[0]) ||
-        ev;
-      return point.pageX;
-    }
-    function isProperEventType(ev, drag) {
-      return drag && ev && (ev.type || '').charAt(0) === drag.pointerType;
-    }
-  }
-
   /*
    * Angular's $cacheFactory doesn't have a keys() method,
    * so we add one ourself.
@@ -611,7 +496,7 @@ angular.module('material.core')
   }
 }]);
 
-/*
+/* 
  * Since removing jQuery from the demos, some code that uses `element.focus()` is broken.
  *
  * We need to add `element.focus()`, because it's testable unlike `element[0].focus`.
@@ -881,7 +766,7 @@ angular.module('material.core')
 
 function InterimElementProvider() {
   createInterimElementProvider.$get = InterimElementFactory;
-  InterimElementFactory.$inject = ["$document", "$q", "$rootScope", "$timeout", "$rootElement", "$animate", "$interpolate", "$mdCompiler", "$mdTheming"];
+  InterimElementFactory.$inject = ["$document", "$q", "$rootScope", "$timeout", "$rootElement", "$animate", "$mdCompiler", "$mdTheming"];
   return createInterimElementProvider;
 
   /**
@@ -1046,12 +931,7 @@ function InterimElementProvider() {
   }
 
   /* @ngInject */
-  function InterimElementFactory($document, $q, $rootScope, $timeout, $rootElement, $animate,
-                                 $interpolate, $mdCompiler, $mdTheming ) {
-    var startSymbol = $interpolate.startSymbol(),
-        endSymbol = $interpolate.endSymbol(),
-        usesStandardSymbols = ((startSymbol === '{{') && (endSymbol === '}}')),
-        processTemplate  = usesStandardSymbols ? angular.identity : replaceInterpolationSymbols;
+  function InterimElementFactory($document, $q, $rootScope, $timeout, $rootElement, $animate, $mdCompiler, $mdTheming) {
 
     return function createInterimElementService() {
       /*
@@ -1160,10 +1040,6 @@ function InterimElementProvider() {
           }
         }, options);
 
-        if (options.template) {
-          options.template = processTemplate(options.template);
-        }
-
         return self = {
           options: options,
           deferred: $q.defer(),
@@ -1212,19 +1088,6 @@ function InterimElementProvider() {
         };
       }
     };
-
-    /*
-     * Replace `{{` and `}}` in a string (usually a template) with the actual start-/endSymbols used
-     * for interpolation. This allows pre-defined templates (for components such as dialog, toast etc)
-     * to continue to work in apps that use custom interpolation start-/endSymbols.
-     *
-     * @param {string} text The test in which to replace `{{` / `}}`
-     * @returns {string} The modified string using the actual interpolation start-/endSymbols
-     */
-    function replaceInterpolationSymbols(text) {
-      if (!text || !angular.isString(text)) return text;
-      return text.replace(/\{\{/g, startSymbol).replace(/}}/g, endSymbol);
-    }
   }
 
 }
@@ -1581,12 +1444,7 @@ function InkRippleService($window, $timeout) {
        */
       function isRippleAllowed() {
         var parent = node.parentNode;
-        var grandparent = parent && parent.parentNode;
-        var ancestor = grandparent && grandparent.parentNode;
-        return !node.hasAttribute('disabled') &&
-          !(parent && parent.hasAttribute('disabled')) &&
-          !(grandparent && grandparent.hasAttribute('disabled')) &&
-          !(ancestor && ancestor.hasAttribute('disabled'));
+        return !node.hasAttribute('disabled') && !(parent && parent.hasAttribute('disabled'));
       }
     }
   }
@@ -1595,7 +1453,7 @@ InkRippleService.$inject = ["$window", "$timeout"];
 
 /**
  * noink/nobar/nostretch directive: make any element that has one of
- * these attributes be given a controller, so that other directives can
+ * these attributes be given a controller, so that other directives can 
  * `require:` these and see if there is a `no<xxx>` parent attribute.
  *
  * @usage
